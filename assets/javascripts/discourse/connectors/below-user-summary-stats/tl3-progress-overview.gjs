@@ -37,10 +37,18 @@ export default class Tl3ProgressButton extends Component {
       return true;
     }
 
-    // Non-staff can only see it on their own profile, IF they meet the trust level logic
-    const meetsTrustSetting = helper.siteSettings.show_warning_when_tl3_requirements_low
-      ? user.trust_level === 3
-      : user.trust_level === 2;
+    // Explicit check for the trust level setting
+    let meetsTrustSetting = false;
+  
+    if (helper.siteSettings.show_warning_when_tl3_requirements_low) {
+      if (user.trust_level === 2 || user.trust_level === 3) {
+        meetsTrustSetting = true;
+      }
+    } else {
+      if (user.trust_level === 2) {
+        meetsTrustSetting = true;
+      }
+    }
 
     return user.isCurrent && meetsTrustSetting && !user.staff;
   }
