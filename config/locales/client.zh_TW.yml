@@ -1,0 +1,51 @@
+zh_TW:
+  admin_js:
+    admin:
+      site_settings:
+        categories:
+          see_tl3_progress: "查看 TL3 進度"
+  js:
+    see_tl3_progress:
+      title: "查看 TL3 進度"
+      modal_button_text: "顯示 TL3 進度"
+      modal_title:
+        one: "TL3 進度（基於最近 %{num_days} 天）"
+        other: "TL3 進度（基於最近 %{num_days} 天）"
+      section_title: "TL3 進度"
+      suspended: "過去 6 個月內被停權"
+      not_suspended: "過去 6 個月內未被停權"
+      silenced: "過去 6 個月內被禁言"
+      not_silenced: "過去 6 個月內未被禁言"
+      days_visited: "造訪天數"
+      topics_replied_to: "回覆的話題數"
+      topics_viewed: "瀏覽的話題數"
+      posts_read: "閱讀的貼文數"
+      flagged_posts: "被檢舉的貼文"
+      flagged_by_users: "檢舉你的使用者數"
+      topics_viewed_all_time: "瀏覽的話題數（全部時間）"
+      posts_read_all_time: "閱讀的貼文數（全部時間）"
+      likes_given: "送出的讚"
+      likes_received: "收到的讚"
+      likes_received_days: "收到的讚：獨立天數"
+      likes_received_users: "收到的讚：獨立使用者"
+      progress_done: "已完成 %{steps_completed}/14 步，完成 %{percentage_done}%。"
+      time_period:
+        one: "基於最近 %{num_days} 天。"
+        other: "基於最近 %{num_days} 天。"
+      closest_stat: "最接近：%{stat_name}，還差 %{stat_left_to_next}。"
+      closest_stat_to_lose: "你即將失去 TL3！危險項：%{stat_name}，還差 %{stat_left}。"
+      qualifies: "符合信任等級 3 的資格。"
+      does_not_qualify: "不符合信任等級 3 的資格。"
+      will_be_promoted: "即將晉升。"
+      will_be_demoted: "即將降級。"
+      locked_will_not_be_promoted: "信任等級已鎖定。永遠不會晉升。"
+      locked_will_not_be_demoted: "信任等級已鎖定。永遠不會降級。"
+      on_grace_period: "目前處於晉升寬限期，不會被降級。"
+      muted_topics_count:
+        one: "%{num_topics} 個話題"
+        other: "%{num_topics} 個話題"
+      muted_posts_count:
+        one: "%{num_posts} 個貼文"
+        other: "%{num_posts} 個貼文"
+      has_muted_topics_posts_warning: "警告：你在已靜音分類中有 %{muted_topics_count} 和 %{muted_posts_count} 可以查看。"
+      muted_categories_link_text: "查看已靜音分類。"
