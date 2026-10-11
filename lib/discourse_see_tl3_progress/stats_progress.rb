@@ -24,7 +24,7 @@ module DiscourseSeeTl3Progress
         topics_entered: @stat.topics_entered,
         posts_read: @stat.posts_read_count,
         time_read: @stat.time_read / 60,
-        account_existed_time: (Time.now - @user.created_at) / 60
+        account_existed_time: (Time.now - @user.created_at) / 60,
         days_visited: @stat.days_visited,
         likes_received: @stat.likes_received,
         likes_given: @stat.likes_given,
