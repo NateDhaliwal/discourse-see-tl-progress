@@ -76,99 +76,99 @@ export default class Tl3ProgressModal extends Component {
 
       <div class="all-progress-gauges">
         <ProgressBar
-          @value={{this.stats.days_visited}}
-          @total={{this.stats.min_days_visited}}
-          @title="see_tl3_progress.days_visited"
-          @type="min"
           @id="days_visited"
+          @title="see_tl3_progress.days_visited"
+          @total={{this.stats.min_days_visited}}
+          @type="min"
+          @value={{this.stats.days_visited}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_topics_replied_to}}
-          @total={{this.stats.min_topics_replied_to}}
-          @title="see_tl3_progress.topics_replied_to"
-          @type="min"
           @id="topics_replied_to"
+          @title="see_tl3_progress.topics_replied_to"
+          @total={{this.stats.min_topics_replied_to}}
+          @type="min"
+          @value={{this.stats.num_topics_replied_to}}
         />
 
         <ProgressBar
-          @value={{this.stats.topics_viewed}}
-          @total={{this.stats.min_topics_viewed}}
-          @title="see_tl3_progress.topics_viewed"
-          @type="min"
           @id="topics_viewed"
+          @title="see_tl3_progress.topics_viewed"
+          @total={{this.stats.min_topics_viewed}}
+          @type="min"
+          @value={{this.stats.topics_viewed}}
         />
 
         <ProgressBar
-          @value={{this.stats.topics_viewed_all_time}}
-          @total={{this.stats.min_topics_viewed_all_time}}
-          @title="see_tl3_progress.topics_viewed_all_time"
-          @type="min"
           @id="topics_viewed_all_time"
+          @title="see_tl3_progress.topics_viewed_all_time"
+          @total={{this.stats.min_topics_viewed_all_time}}
+          @type="min"
+          @value={{this.stats.topics_viewed_all_time}}
         />
 
         <ProgressBar
-          @value={{this.stats.posts_read}}
-          @total={{this.stats.min_posts_read}}
-          @title="see_tl3_progress.posts_read"
-          @type="min"
           @id="posts_read"
+          @title="see_tl3_progress.posts_read"
+          @total={{this.stats.min_posts_read}}
+          @type="min"
+          @value={{this.stats.posts_read}}
         />
 
         <ProgressBar
-          @value={{this.stats.posts_read_all_time}}
-          @total={{this.stats.min_posts_read_all_time}}
-          @title="see_tl3_progress.posts_read_all_time"
-          @type="min"
           @id="posts_read_all_time"
+          @title="see_tl3_progress.posts_read_all_time"
+          @total={{this.stats.min_posts_read_all_time}}
+          @type="min"
+          @value={{this.stats.posts_read_all_time}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_flagged_posts}}
-          @total={{this.stats.max_flagged_posts}}
-          @title="see_tl3_progress.flagged_posts"
-          @type="max"
           @id="num_flagged_posts"
-        />
-
-        <ProgressBar
-          @value={{this.stats.num_flagged_by_users}}
-          @total={{this.stats.max_flagged_by_users}}
-          @title="see_tl3_progress.flagged_by_users"
+          @title="see_tl3_progress.flagged_posts"
+          @total={{this.stats.max_flagged_posts}}
           @type="max"
+          @value={{this.stats.num_flagged_posts}}
+        />
+
+        <ProgressBar
           @id="num_flagged_by_users"
+          @title="see_tl3_progress.flagged_by_users"
+          @total={{this.stats.max_flagged_by_users}}
+          @type="max"
+          @value={{this.stats.num_flagged_by_users}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_likes_given}}
-          @total={{this.stats.min_likes_given}}
-          @title="see_tl3_progress.likes_given"
-          @type="min"
           @id="num_likes_given"
+          @title="see_tl3_progress.likes_given"
+          @total={{this.stats.min_likes_given}}
+          @type="min"
+          @value={{this.stats.num_likes_given}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_likes_received}}
-          @total={{this.stats.min_likes_received}}
-          @title="see_tl3_progress.likes_received"
-          @type="min"
           @id="num_likes_received"
+          @title="see_tl3_progress.likes_received"
+          @total={{this.stats.min_likes_received}}
+          @type="min"
+          @value={{this.stats.num_likes_received}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_likes_received_users}}
-          @total={{this.stats.min_likes_received_users}}
-          @title="see_tl3_progress.likes_received_users"
-          @type="min"
           @id="num_likes_received_users"
+          @title="see_tl3_progress.likes_received_users"
+          @total={{this.stats.min_likes_received_users}}
+          @type="min"
+          @value={{this.stats.num_likes_received_users}}
         />
 
         <ProgressBar
-          @value={{this.stats.num_likes_received_days}}
-          @total={{this.stats.min_likes_received_days}}
-          @title="see_tl3_progress.likes_received_days"
-          @type="min"
           @id="num_likes_received_days"
+          @title="see_tl3_progress.likes_received_days"
+          @total={{this.stats.min_likes_received_days}}
+          @type="min"
+          @value={{this.stats.num_likes_received_days}}
         />
       </div>
 

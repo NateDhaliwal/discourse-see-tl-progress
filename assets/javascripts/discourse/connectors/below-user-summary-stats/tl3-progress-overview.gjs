@@ -61,36 +61,6 @@ export default class Tl3ProgressButton extends Component {
     this.getIsLocked();
   }
 
-  async getUserStats() {
-    try {
-      const data = await ajax(
-        `/u/${this.args.user.username}/tl3-progress.json`
-      );
-      this.stats = data.stats_progress;
-      this.stats_loading = false;
-    } catch (e) {
-      popupAjaxError(e);
-    }
-  }
-
-  async getIsLocked() {
-    if (!this.siteSettings.show_locked_at_trust_level) {
-      this.lockedStatus = {
-        is_locked: false,
-        locked_at_trust_level: null,
-      };
-      this.is_locked_loading = false;
-      return;
-    }
-    try {
-      const data = await ajax(`/u/${this.args.user.username}/is-locked.json`);
-      this.lockedStatus = data;
-      this.is_locked_loading = false;
-    } catch (e) {
-      popupAjaxError(e);
-    }
-  }
-
   get percentageDone() {
     return percentageDone(this.stats);
   }
@@ -126,11 +96,6 @@ export default class Tl3ProgressButton extends Component {
       stat_name: i18n(`see_tl3_progress.${closestStatObj.key}`),
       stat_left_to_next: closestStatObj.left,
     });
-  }
-
-  @action
-  toggleModalState() {
-    this.modalShowing = !this.modalShowing;
   }
 
   get barsFilledOrEmpty() {
@@ -200,6 +165,41 @@ export default class Tl3ProgressButton extends Component {
     });
   }
 
+  async getUserStats() {
+    try {
+      const data = await ajax(
+        `/u/${this.args.user.username}/tl3-progress.json`
+      );
+      this.stats = data.stats_progress;
+      this.stats_loading = false;
+    } catch (e) {
+      popupAjaxError(e);
+    }
+  }
+
+  async getIsLocked() {
+    if (!this.siteSettings.show_locked_at_trust_level) {
+      this.lockedStatus = {
+        is_locked: false,
+        locked_at_trust_level: null,
+      };
+      this.is_locked_loading = false;
+      return;
+    }
+    try {
+      const data = await ajax(`/u/${this.args.user.username}/is-locked.json`);
+      this.lockedStatus = data;
+      this.is_locked_loading = false;
+    } catch (e) {
+      popupAjaxError(e);
+    }
+  }
+
+  @action
+  toggleModalState() {
+    this.modalShowing = !this.modalShowing;
+  }
+
   <template>
     {{#if (or this.stats_loading this.is_locked_loading)}}
       <DConditionalLoadingSpinner
@@ -232,7 +232,7 @@ export default class Tl3ProgressButton extends Component {
       {{/if}}
 
       {{#if this.showClosestStat}}
-        <div id="closest-stat-text" class="inline-wrapper">{{dIcon "forward"}}
+        <div class="inline-wrapper" id="closest-stat-text">{{dIcon "forward"}}
           {{this.closestStatText}}
         </div>
       {{/if}}
@@ -256,7 +256,7 @@ export default class Tl3ProgressButton extends Component {
         </div>
       {{/if}}
       {{#if this.showAboutToLoseTl3}}
-        <div id="closest-stat-to-lose-text" class="inline-wrapper">{{dIcon
+        <div class="inline-wrapper" id="closest-stat-to-lose-text">{{dIcon
             "triangle-exclamation"
           }}
           {{this.closestStatToLoseText}}
@@ -272,12 +272,13 @@ export default class Tl3ProgressButton extends Component {
         <DButton
           class="btn-primary"
           style="margin-bottom: 1em;"
-          @label="see_tl3_progress.modal_button_text"
           @action={{this.toggleModalState}}
           @icon={{this.siteSettings.modal_button_icon}}
+          @label="see_tl3_progress.modal_button_text"
         />
         {{#if this.modalShowing}}
           <DModal
+            @closeModal={{this.toggleModalState}}
             @title={{i18n
               (if
                 (eq this.stats.time_period 1)
@@ -286,13 +287,12 @@ export default class Tl3ProgressButton extends Component {
               )
               num_days=this.stats.time_period
             }}
-            @closeModal={{this.toggleModalState}}
           >
             <Tl3ProgressModal
-              @user={{@user}}
-              @stats={{this.stats}}
               @is_locked={{this.lockedStatus.is_locked}}
               @locked_at_trust_level={{this.lockedStatus.locked_at_trust_level}}
+              @stats={{this.stats}}
+              @user={{@user}}
             />
           </DModal>
         {{/if}}
