@@ -26,19 +26,23 @@ module DiscourseSeeTl3Progress
         tl1_met: @promotion.tl1_met,
         topics_entered: {
           value: @stat.topics_entered,
-          req: SiteSetting.tl1_requires_topics_entered
+          req: SiteSetting.tl1_requires_topics_entered,
+          max: false,
         },
         posts_read: {
           value: @stat.posts_read_count,
-          req: SiteSetting.tl1_requires_read_posts
+          req: SiteSetting.tl1_requires_read_posts,
+          max: false,
         },
         time_read: {
           value: @stat.time_read / 60,
-          req: SiteSetting.tl1_requires_time_spent_mins
+          req: SiteSetting.tl1_requires_time_spent_mins,
+          max: false,
         },
         account_existed_time: {
           value: (Time.now - @user.created_at) / 60,
-          req: SiteSetting.tl1_requires_time_spent_mins
+          req: SiteSetting.tl1_requires_time_spent_mins,
+          max: false,
         },
       }
     end
@@ -49,35 +53,43 @@ module DiscourseSeeTl3Progress
         tl2_met: @promotion.tl2_met,
         days_visited: {
           value: @stat.days_visited,
-          req: SiteSetting.tl2_requires_days_visited
+          req: SiteSetting.tl2_requires_days_visited,
+          max: false,
         },
         topics_entered: {
           value: @stat.topics_entered,
-          req: SiteSetting.tl2_requires_topics_entered
+          req: SiteSetting.tl2_requires_topics_entered,
+          max: false,
         },
         posts_read: {
           value: @stat.posts_read_count,
-          req: SiteSetting.tl2_requires_read_posts
+          req: SiteSetting.tl2_requires_read_posts,
+          max: false,
         },
         time_read: {
           value: @stat.time_read / 60,
-          req: SiteSetting.tl2_requires_time_spent_mins
+          req: SiteSetting.tl2_requires_time_spent_mins,
+          max: false,
         },
         account_existed_time: {
           value: (Time.now - @user.created_at) / 60,
-          req: SiteSetting.tl2_requires_time_spent_mins
+          req: SiteSetting.tl2_requires_time_spent_mins,
+          max: false,
         },
         likes_given: {
           value: @stat.likes_given,
-          req: SiteSetting.tl2_requires_likes_given
+          req: SiteSetting.tl2_requires_likes_given,
+          max: false,
         },
         likes_received: {
           value: @stat.likes_received,
-          req: SiteSetting.tl2_requires_likes_received
+          req: SiteSetting.tl2_requires_likes_received,
+          max: false,
         },
         min_topics_replied_to: {
           value: @stat.calc_topic_reply_count!,
-          req: SiteSetting.tl2_requires_topic_reply_count
+          req: SiteSetting.tl2_requires_topic_reply_count,
+          max: false,
         }
       }
     end

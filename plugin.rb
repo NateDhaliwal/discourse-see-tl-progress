@@ -21,7 +21,7 @@ register_asset "stylesheets/common/progress-bar.scss"
 
 after_initialize do
   Discourse::Application.routes.append do
-    get "/u/:username/tl3-progress.json" => "tl3_progress#show",
+    get "/u/:username/tl-progress.json" => "tl_progress#show",
         :constraints => {
           username: RouteFormat.username,
         }

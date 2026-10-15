@@ -167,9 +167,7 @@ export default class Tl3ProgressButton extends Component {
 
   async getUserStats() {
     try {
-      const data = await ajax(
-        `/u/${this.args.user.username}/tl3-progress.json`
-      );
+      const data = await ajax(`/u/${this.args.user.username}/tl-progress.json`);
       this.stats = data.stats_progress;
       this.stats_loading = false;
     } catch (e) {

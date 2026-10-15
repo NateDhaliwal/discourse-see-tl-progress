@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DiscourseSeeTl3Progress
-  class Tl3ProgressController < ApplicationController
+  class TlProgressController < ApplicationController
     requires_plugin PLUGIN_NAME
     requires_login
 
