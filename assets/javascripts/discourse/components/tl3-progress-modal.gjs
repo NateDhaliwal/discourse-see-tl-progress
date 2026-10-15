@@ -1,7 +1,8 @@
 import Component from "@glimmer/component";
+import { fn } from "@ember/helper";
 import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
-import { and, eq } from "discourse/truth-helpers";
+import { and, eq, not, or } from "discourse/truth-helpers";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 import { doesQualify } from "../lib/calculate-stats";
@@ -46,6 +47,21 @@ export default class Tl3ProgressModal extends Component {
     });
   }
 
+  showProgressBar(key) {
+    return ![
+      "time_period",
+      "on_grace_period",
+      "num_posts_in_muted_categories",
+      "num_topics_in_muted_categories",
+      "silenced",
+      "suspended",
+      "penalty_counts",
+      "tl1_met",
+      "tl2_met",
+      "tl3_met",
+    ].includes(key);
+  }
+
   <template>
     {{#if @stats}}
       <p class="inline-wrapper">
@@ -75,7 +91,10 @@ export default class Tl3ProgressModal extends Component {
         }}</p>
 
       <div class="all-progress-gauges">
-        <ProgressBar
+        {{#each this.stat as |stat|}}
+          {{#if (fn this.showProgressBar @key)}}{{/if}}
+        {{/each}}
+        {{!-- <ProgressBar
           @id="days_visited"
           @title="see_tl3_progress.days_visited"
           @total={{this.stats.min_days_visited}}
@@ -169,7 +188,7 @@ export default class Tl3ProgressModal extends Component {
           @total={{this.stats.min_likes_received_days}}
           @type="min"
           @value={{this.stats.num_likes_received_days}}
-        />
+        /> --}}
       </div>
 
       <hr />
