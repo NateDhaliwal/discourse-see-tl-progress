@@ -1,11 +1,12 @@
 import Component from "@glimmer/component";
-import { fn } from "@ember/helper";
+import { concat, fn } from "@ember/helper";
 import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
-import { and, eq, not, or } from "discourse/truth-helpers";
+import { and } from "discourse/truth-helpers";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 import { doesQualify } from "../lib/calculate-stats";
+import shouldSkip from "../lib/should-skip";
 import ProgressBar from "./progress-bar";
 
 export default class Tl3ProgressModal extends Component {
@@ -47,21 +48,6 @@ export default class Tl3ProgressModal extends Component {
     });
   }
 
-  showProgressBar(key) {
-    return ![
-      "time_period",
-      "on_grace_period",
-      "num_posts_in_muted_categories",
-      "num_topics_in_muted_categories",
-      "silenced",
-      "suspended",
-      "penalty_counts",
-      "tl1_met",
-      "tl2_met",
-      "tl3_met",
-    ].includes(key);
-  }
-
   <template>
     {{#if @stats}}
       <p class="inline-wrapper">
@@ -92,7 +78,15 @@ export default class Tl3ProgressModal extends Component {
 
       <div class="all-progress-gauges">
         {{#each this.stat as |stat|}}
-          {{#if (fn this.showProgressBar @key)}}{{/if}}
+          {{#if (fn shouldSkip @key)}}
+            <ProgressBar
+              @id={{@key}}
+              @title={{concat "see_tl3_progress" @key}}
+              @total={{stat.req}}
+              @type={{if stat.max "max" "min"}}
+              @value={{stat.value}}
+            />
+          {{/if}}
         {{/each}}
         {{!-- <ProgressBar
           @id="days_visited"

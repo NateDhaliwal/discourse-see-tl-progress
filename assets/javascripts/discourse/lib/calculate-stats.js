@@ -1,28 +1,33 @@
+import shouldSkip from "./should-skip";
+
 export function stepsDone(stats) {
   let steps = 0;
-  const allReqs = [
-    !(stats["penalty_counts"]["silenced"] > 0 || stats["silenced"]),
-    !(stats["penalty_counts"]["suspended"] > 0 || stats["suspended"]),
-    stats.days_visited >= stats.min_days_visited,
-    stats.num_topics_replied_to >= stats.min_topics_replied_to,
-    stats.topics_viewed >= stats.min_topics_viewed,
-    stats.posts_read >= stats.min_posts_read,
-    stats.num_flagged_posts <= stats.max_flagged_posts,
-    stats.num_flagged_by_users <= stats.max_flagged_by_users,
-    stats.topics_viewed_all_time >= stats.min_topics_viewed_all_time,
-    stats.posts_read_all_time >= stats.min_posts_read_all_time,
-    stats.num_likes_given >= stats.min_likes_given,
-    stats.num_likes_received >= stats.min_likes_received,
-    stats.num_likes_received_days >= stats.min_likes_received_days,
-    stats.num_likes_received_users >= stats.min_likes_received_users,
-  ];
+  // const allReqs = [
+  //   !(stats["penalty_counts"]["silenced"] > 0 || stats["silenced"]),
+  //   !(stats["penalty_counts"]["suspended"] > 0 || stats["suspended"]),
+  //   stats.days_visited >= stats.min_days_visited,
+  //   stats.num_topics_replied_to >= stats.min_topics_replied_to,
+  //   stats.topics_viewed >= stats.min_topics_viewed,
+  //   stats.posts_read >= stats.min_posts_read,
+  //   stats.num_flagged_posts <= stats.max_flagged_posts,
+  //   stats.num_flagged_by_users <= stats.max_flagged_by_users,
+  //   stats.topics_viewed_all_time >= stats.min_topics_viewed_all_time,
+  //   stats.posts_read_all_time >= stats.min_posts_read_all_time,
+  //   stats.num_likes_given >= stats.min_likes_given,
+  //   stats.num_likes_received >= stats.min_likes_received,
+  //   stats.num_likes_received_days >= stats.min_likes_received_days,
+  //   stats.num_likes_received_users >= stats.min_likes_received_users,
+  // ];
 
-  for (const req of allReqs) {
-    if (req) {
-      steps++;
-    }
+  // for (const req of allReqs) {
+  //   if (req) {
+  //     steps++;
+  //   }
+  // }
+  // return steps;
+  let allReqs = [];
+  for (const stat in stats) {
   }
-  return steps;
 }
 
 export function percentageDone(stats) {
