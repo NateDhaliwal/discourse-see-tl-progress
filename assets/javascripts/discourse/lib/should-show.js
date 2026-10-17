@@ -1,4 +1,4 @@
-export default function shouldSkip(key) {
+export default function shouldShow(key) {
   return ![
     "time_period",
     "on_grace_period",

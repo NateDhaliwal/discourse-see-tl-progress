@@ -2,7 +2,7 @@
 
 module DiscourseSeeTl3Progress
   class StatsProgress
-    def initalize(user)
+    def initialize(user)
       @user = user
       @stat = user.user_stat
     end
@@ -97,7 +97,7 @@ module DiscourseSeeTl3Progress
     def tl3_stats
       {
         tl3_met: Promotion.tl3_met?(@user)
-      }.merge(DiscourseSeeTl3Progress::TL3Stats.new(user).stats)
+      }.merge(DiscourseSeeTl3Progress::TL3Stats.new(@user).stats)
     end
   end
 end

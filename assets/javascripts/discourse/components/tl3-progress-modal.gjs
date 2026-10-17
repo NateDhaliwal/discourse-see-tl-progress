@@ -1,13 +1,13 @@
 import Component from "@glimmer/component";
-import { concat, fn } from "@ember/helper";
+import { concat } from "@ember/helper";
 import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
 import { and } from "discourse/truth-helpers";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
-import { doesQualify } from "../lib/calculate-stats";
-import shouldSkip from "../lib/should-skip";
-import ProgressBar from "./progress-bar";
+import { doesQualify } from "../lib/calculate-stats.js";
+import shouldShow from "../lib/should-show.js";
+import ProgressBar from "./progress-bar.gjs";
 
 export default class Tl3ProgressModal extends Component {
   @service siteSettings;
@@ -77,112 +77,17 @@ export default class Tl3ProgressModal extends Component {
         }}</p>
 
       <div class="all-progress-gauges">
-        {{#each this.stat as |stat|}}
-          {{#if (fn shouldSkip @key)}}
+        {{#each-in @stats as |key stat|}}
+          {{#if (shouldShow key)}}
             <ProgressBar
-              @id={{@key}}
-              @title={{concat "see_tl3_progress" @key}}
+              @id={{key}}
+              @title={{concat "see_tl3_progress." key}}
               @total={{stat.req}}
               @type={{if stat.max "max" "min"}}
               @value={{stat.value}}
             />
           {{/if}}
-        {{/each}}
-        {{!-- <ProgressBar
-          @id="days_visited"
-          @title="see_tl3_progress.days_visited"
-          @total={{this.stats.min_days_visited}}
-          @type="min"
-          @value={{this.stats.days_visited}}
-        />
-
-        <ProgressBar
-          @id="topics_replied_to"
-          @title="see_tl3_progress.topics_replied_to"
-          @total={{this.stats.min_topics_replied_to}}
-          @type="min"
-          @value={{this.stats.num_topics_replied_to}}
-        />
-
-        <ProgressBar
-          @id="topics_viewed"
-          @title="see_tl3_progress.topics_viewed"
-          @total={{this.stats.min_topics_viewed}}
-          @type="min"
-          @value={{this.stats.topics_viewed}}
-        />
-
-        <ProgressBar
-          @id="topics_viewed_all_time"
-          @title="see_tl3_progress.topics_viewed_all_time"
-          @total={{this.stats.min_topics_viewed_all_time}}
-          @type="min"
-          @value={{this.stats.topics_viewed_all_time}}
-        />
-
-        <ProgressBar
-          @id="posts_read"
-          @title="see_tl3_progress.posts_read"
-          @total={{this.stats.min_posts_read}}
-          @type="min"
-          @value={{this.stats.posts_read}}
-        />
-
-        <ProgressBar
-          @id="posts_read_all_time"
-          @title="see_tl3_progress.posts_read_all_time"
-          @total={{this.stats.min_posts_read_all_time}}
-          @type="min"
-          @value={{this.stats.posts_read_all_time}}
-        />
-
-        <ProgressBar
-          @id="num_flagged_posts"
-          @title="see_tl3_progress.flagged_posts"
-          @total={{this.stats.max_flagged_posts}}
-          @type="max"
-          @value={{this.stats.num_flagged_posts}}
-        />
-
-        <ProgressBar
-          @id="num_flagged_by_users"
-          @title="see_tl3_progress.flagged_by_users"
-          @total={{this.stats.max_flagged_by_users}}
-          @type="max"
-          @value={{this.stats.num_flagged_by_users}}
-        />
-
-        <ProgressBar
-          @id="num_likes_given"
-          @title="see_tl3_progress.likes_given"
-          @total={{this.stats.min_likes_given}}
-          @type="min"
-          @value={{this.stats.num_likes_given}}
-        />
-
-        <ProgressBar
-          @id="num_likes_received"
-          @title="see_tl3_progress.likes_received"
-          @total={{this.stats.min_likes_received}}
-          @type="min"
-          @value={{this.stats.num_likes_received}}
-        />
-
-        <ProgressBar
-          @id="num_likes_received_users"
-          @title="see_tl3_progress.likes_received_users"
-          @total={{this.stats.min_likes_received_users}}
-          @type="min"
-          @value={{this.stats.num_likes_received_users}}
-        />
-
-        <ProgressBar
-          @id="num_likes_received_days"
-          @title="see_tl3_progress.likes_received_days"
-          @total={{this.stats.min_likes_received_days}}
-          @type="min"
-          @value={{this.stats.num_likes_received_days}}
-        /> --}}
+        {{/each-in}}
       </div>
 
       <hr />

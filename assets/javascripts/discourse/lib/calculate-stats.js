@@ -1,9 +1,9 @@
-import shouldSkip from "./should-skip";
+import shouldShow from "./should-show.js";
 
 export function stepsDone(stats) {
   let steps = 0;
   for (const stat_key in stats) {
-    if (!shouldSkip(stat_key)) {
+    if (shouldShow(stat_key)) {
       const stat = stats[stat_key];
       if (
         (stat.max && stat.req >= stat.value) ||
@@ -20,7 +20,7 @@ export function percentageDone(stats) {
   let total = 0;
 
   for (const stat_key in stats) {
-    if (!shouldSkip(stat_key)) {
+    if (shouldShow(stat_key)) {
       const stat = stats[stat_key];
       if (stat.max) {
         if (stat.req >= stat.value) {
@@ -60,7 +60,7 @@ export function nextStatToGet(stats) {
   let min = Infinity;
 
   for (const stat_key in stats) {
-    if (!shouldSkip(stat_key)) {
+    if (shouldShow(stat_key)) {
       const stat = stats[stat_key];
       // Skip the flag-related stats (the user can't do anything about them)
       if (stat.max) {
@@ -87,7 +87,7 @@ export function nextStatToLose(stats, site_settings) {
   let max = 0;
 
   for (const stat_key in stats) {
-    if (!shouldSkip(stat_key)) {
+    if (shouldShow(stat_key)) {
       const stat = stats[stat_key];
       // Skip the flag-related stats (the user can't do anything about them)
       if (stat.max) {

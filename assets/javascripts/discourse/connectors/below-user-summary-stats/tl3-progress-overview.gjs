@@ -12,40 +12,40 @@ import DConditionalLoadingSpinner from "discourse/ui-kit/d-conditional-loading-s
 import DModal from "discourse/ui-kit/d-modal";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
-import Tl3ProgressModal from "../../components/tl3-progress-modal";
+import Tl3ProgressModal from "../../components/tl3-progress-modal.gjs";
 import {
   doesQualify,
   nextStatToGet,
   nextStatToLose,
   percentageDone,
   stepsDone,
-} from "../../lib/calculate-stats";
+} from "../../lib/calculate-stats.js";
 
 export default class Tl3ProgressButton extends Component {
   static shouldRender(args, helper) {
     const user = args.user;
+    const settings = helper.siteSettings;
 
-    if (!helper.currentUser || !user.isCurrent || user.staff) {
+    if (!helper.currentUser || user.staff) {
       return false;
     }
 
-    // Staff can always see it
-    if (helper.currentUser.staff) {
-      return true;
-    }
+    // Staff and user can always see it
+    const canView =
+      helper.currentUser.staff || user.id === helper.currentUser.id;
 
-    if (
-      !helper.siteSettings.enable_for_trust_level_promotions.includes(
-        helper.currentUser.trust_level + 1
-      ) ||
-      !(
-        helper.siteSettings.show_warning_when_tl3_requirements_low &&
-        user.trust_level === 3
-      )
-    ) {
-      return false;
+    const inSettings = !settings.enable_for_trust_level_promotions.includes(
+      (helper.currentUser.trust_level + 1).toString()
+    );
+
+    if (user.trust_level === 3) {
+      if (settings.show_warning_when_tl3_requirements_low) {
+        return true;
+      } else {
+        return false;
+      }
     }
-    return !user.staff;
+    return canView && inSettings;
   }
 
   @service siteSettings;

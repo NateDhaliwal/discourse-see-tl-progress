@@ -40,7 +40,7 @@ module DiscourseSeeTl3Progress
           req: @reqs.min_days_visited,
           max: false,
         },
-        num_topics_replied_to: {
+        topics_replied_to: {
           value: @reqs.num_topics_replied_to,
           req: @reqs.min_topics_replied_to,
           max: false,
@@ -55,12 +55,12 @@ module DiscourseSeeTl3Progress
           req: @reqs.min_posts_read,
           max: false,
         },
-        num_flagged_posts: {
+        flagged_posts: {
           value: @reqs.num_flagged_posts,
           req: @reqs.max_flagged_posts,
           max: true,
         },
-        num_flagged_by_users: {
+        flagged_by_users: {
           value: @reqs.num_flagged_by_users,
           req: @reqs.max_flagged_by_users,
           max: true,
@@ -85,12 +85,12 @@ module DiscourseSeeTl3Progress
           req: @reqs.min_likes_received,
           max: false,
         },
-        num_likes_received_users: {
+        likes_received_users: {
           value: @reqs.num_likes_received_users,
           req: @reqs.min_likes_received_users,
           max: false,
         },
-        num_likes_received_days: {
+        likes_received_days: {
           value: @reqs.num_likes_received_days,
           req: @reqs.min_likes_received_days,
           max: false,
