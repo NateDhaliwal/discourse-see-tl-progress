@@ -4,7 +4,6 @@ module DiscourseSeeTl3Progress
   class StatsProgress
     def initalize(user)
       @user = user
-      @promotion = Promotion.new(user)
       @stat = user.user_stat
     end
 
@@ -23,7 +22,7 @@ module DiscourseSeeTl3Progress
     # TL0 -> TL1
     def tl1_stats
       {
-        tl1_met: @promotion.tl1_met,
+        tl1_met: Promotion.tl1_met?(@user),
         topics_entered: {
           value: @stat.topics_entered,
           req: SiteSetting.tl1_requires_topics_entered,
@@ -50,7 +49,7 @@ module DiscourseSeeTl3Progress
     # TL1 -> TL2
     def tl2_stats
       {
-        tl2_met: @promotion.tl2_met,
+        tl2_met: Promotion.tl2_met?(@user),
         days_visited: {
           value: @stat.days_visited,
           req: SiteSetting.tl2_requires_days_visited,
@@ -97,7 +96,7 @@ module DiscourseSeeTl3Progress
     # TL2 -> TL3
     def tl3_stats
       {
-        tl3_met: @promotion.tl3_met
+        tl3_met: Promotion.tl3_met?(@user)
       }.merge(DiscourseSeeTl3Progress::TL3Stats.new(user).stats)
     end
   end

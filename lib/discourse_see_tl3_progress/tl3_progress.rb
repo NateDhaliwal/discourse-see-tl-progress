@@ -38,18 +38,22 @@ module DiscourseSeeTl3Progress
         days_visited: {
           value: @reqs.days_visited,
           req: @reqs.min_days_visited,
+          max: false,
         },
         num_topics_replied_to: {
           value: @reqs.num_topics_replied_to,
           req: @reqs.min_topics_replied_to,
+          max: false,
         },
         topics_viewed: {
           value: @reqs.topics_viewed,
           req: @reqs.min_topics_viewed,
+          max: false,
         },
         posts_read: {
           value: @reqs.posts_read,
           req: @reqs.min_posts_read,
+          max: false,
         },
         num_flagged_posts: {
           value: @reqs.num_flagged_posts,
@@ -64,26 +68,32 @@ module DiscourseSeeTl3Progress
         topics_viewed_all_time: {
           value: @reqs.topics_viewed_all_time,
           req: @reqs.min_topics_viewed_all_time,
+          max: false,
         },
         posts_read_all_time: {
           value: @reqs.posts_read_all_time,
           req: @reqs.min_posts_read_all_time,
+          max: false,
         },
         likes_given: {
           value: @reqs.num_likes_given,
           req: @reqs.min_likes_given,
+          max: false,
         },
         likes_received: {
           value: @reqs.num_likes_received,
           req: @reqs.min_likes_received,
+          max: false,
         },
         num_likes_received_users: {
           value: @reqs.num_likes_received_users,
           req: @reqs.min_likes_received_users,
+          max: false,
         },
         num_likes_received_days: {
           value: @reqs.num_likes_received_days,
           req: @reqs.min_likes_received_days,
+          max: false,
         },
       }
     end

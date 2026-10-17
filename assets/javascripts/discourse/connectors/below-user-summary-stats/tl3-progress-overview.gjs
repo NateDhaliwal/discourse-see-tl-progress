@@ -14,9 +14,9 @@ import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 import Tl3ProgressModal from "../../components/tl3-progress-modal";
 import {
-  diffLess,
-  diffMore,
   doesQualify,
+  nextStatToGet,
+  nextStatToLose,
   percentageDone,
   stepsDone,
 } from "../../lib/calculate-stats";
@@ -25,10 +25,7 @@ export default class Tl3ProgressButton extends Component {
   static shouldRender(args, helper) {
     const user = args.user;
 
-    if (!helper.currentUser) {
-      return false;
-    }
-    if (user.trust_level !== 2 && user.trust_level !== 3) {
+    if (!helper.currentUser || !user.isCurrent || user.staff) {
       return false;
     }
 
@@ -37,13 +34,18 @@ export default class Tl3ProgressButton extends Component {
       return true;
     }
 
-    // Non-staff can only see it on their own profile, IF they meet the trust level logic
-    const meetsTrustSetting = helper.siteSettings
-      .show_warning_when_tl3_requirements_low
-      ? user.trust_level === 3
-      : user.trust_level === 2;
-
-    return user.isCurrent && meetsTrustSetting && !user.staff;
+    if (
+      !helper.siteSettings.enable_for_trust_level_promotions.includes(
+        helper.currentUser.trust_level + 1
+      ) ||
+      !(
+        helper.siteSettings.show_warning_when_tl3_requirements_low &&
+        user.trust_level === 3
+      )
+    ) {
+      return false;
+    }
+    return !user.staff;
   }
 
   @service siteSettings;
@@ -86,12 +88,12 @@ export default class Tl3ProgressButton extends Component {
       this.siteSettings.show_next_closest_stat &&
       this.args.user.trust_level === 2 &&
       this.stepsDone < 14 &&
-      Boolean(diffLess(this.stats))
+      Boolean(nextStatToGet(this.stats))
     );
   }
 
   get closestStatText() {
-    const closestStatObj = diffLess(this.stats);
+    const closestStatObj = nextStatToGet(this.stats);
     return i18n("see_tl3_progress.closest_stat", {
       stat_name: i18n(`see_tl3_progress.${closestStatObj.key}`),
       stat_left_to_next: closestStatObj.left,
@@ -122,12 +124,12 @@ export default class Tl3ProgressButton extends Component {
       !this.stats.on_grace_period &&
       this.siteSettings.show_warning_when_tl3_requirements_low &&
       this.args.user.trust_level === 3 &&
-      Boolean(diffMore(this.stats, this.siteSettings))
+      Boolean(nextStatToLose(this.stats, this.siteSettings))
     );
   }
 
   get closestStatToLoseText() {
-    const closestStatObj = diffMore(this.stats, this.siteSettings);
+    const closestStatObj = nextStatToLose(this.stats, this.siteSettings);
     if (!closestStatObj) {
       return "";
     }
