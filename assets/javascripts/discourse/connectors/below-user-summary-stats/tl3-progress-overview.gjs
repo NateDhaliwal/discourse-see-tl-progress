@@ -34,9 +34,9 @@ export default class Tl3ProgressButton extends Component {
     const canView =
       helper.currentUser.staff || user.id === helper.currentUser.id;
 
-    const inSettings = !settings.enable_for_trust_level_promotions.includes(
-      (helper.currentUser.trust_level + 1).toString()
-    );
+    const inSettings = settings.enable_for_trust_level_promotions
+      .split("|")
+      .includes((user.trust_level + 1).toString());
 
     if (user.trust_level === 3) {
       if (settings.show_warning_when_tl3_requirements_low) {
@@ -102,7 +102,8 @@ export default class Tl3ProgressButton extends Component {
 
   get barsFilledOrEmpty() {
     let state = [];
-    for (let i = 0; i < 14; i++) {
+    // -2 for suspended and silenced
+    for (let i = 0; i < Object.keys(this.stats).length - 2; i++) {
       if (i < this.stepsDone) {
         state.push(
           `background-color: ${this.session.defaultColorSchemeIsDark || this.session.darkModeAvailable ? this.siteSettings.progress_bar_color_dark : this.siteSettings.progress_bar_color_light}; width: 100%;`
@@ -167,6 +168,22 @@ export default class Tl3ProgressButton extends Component {
     });
   }
 
+  get overviewHeading() {
+    const tl = this.args.user.trust_level;
+    if (tl === 0) {
+      return i18n("see_tl3_progress.modal_title_tl_1");
+    } else if (tl === 1) {
+      return i18n("see_tl3_progress.modal_title_tl_2");
+    } else {
+      return i18n(
+        `see_tl3_progress.modal_title_tl_2.${this.stats.time_period === 1 ? "one" : "other"}`,
+        {
+          num_days: this.stats.time_period,
+        }
+      );
+    }
+  }
+
   async getUserStats() {
     try {
       const data = await ajax(`/u/${this.args.user.username}/tl-progress.json`);
@@ -206,15 +223,8 @@ export default class Tl3ProgressButton extends Component {
         @condition={{or this.stats_loading this.is_locked_loading}}
       />
     {{else}}
-      <h3>{{i18n
-          (if
-            (eq this.stats.time_period 1)
-            "see_tl3_progress.modal_title.one"
-            "see_tl3_progress.modal_title.other"
-          )
-          num_days=this.stats.time_period
-        }}</h3>
-      {{#if (eq @user.trust_level 2)}}
+      <h3>{{this.overviewHeading}}</h3>
+      {{#if (lt @user.trust_level 3)}}
         <div class="segmented-bars">
           {{#each this.barsFilledOrEmpty as |state|}}
             <div class="segmented-bar" style={{trustHTML this.barBg}}>
@@ -243,7 +253,7 @@ export default class Tl3ProgressButton extends Component {
             (gte this.stats.num_topics_in_muted_categories 1)
             (gte this.stats.num_posts_in_muted_categories 1)
           )
-          (eq @user.trust_level 2)
+          (lt @user.trust_level 3)
           (lt this.stepsDone 14)
         )
       }}
@@ -266,7 +276,7 @@ export default class Tl3ProgressButton extends Component {
       {{#if
         (and
           this.siteSettings.show_verbose_tl3_progress
-          (or (eq @user.trust_level 2) (eq @user.trust_level 3))
+          (or (lt @user.trust_level 3) (eq @user.trust_level 3))
         )
       }}
         <DButton
@@ -279,14 +289,7 @@ export default class Tl3ProgressButton extends Component {
         {{#if this.modalShowing}}
           <DModal
             @closeModal={{this.toggleModalState}}
-            @title={{i18n
-              (if
-                (eq this.stats.time_period 1)
-                "see_tl3_progress.modal_title.one"
-                "see_tl3_progress.modal_title.other"
-              )
-              num_days=this.stats.time_period
-            }}
+            @title={{this.overviewHeading}}
           >
             <Tl3ProgressModal
               @is_locked={{this.lockedStatus.is_locked}}

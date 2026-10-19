@@ -5,6 +5,7 @@ module DiscourseSeeTl3Progress
     def initialize(user)
       @user = user
       @stat = user.user_stat
+      @pc = TrustLevel3Requirements.new(user)
     end
 
     def stats
@@ -23,6 +24,7 @@ module DiscourseSeeTl3Progress
     def tl1_stats
       {
         tl1_met: Promotion.tl1_met?(@user),
+        penalty_counts: @pc.penalty_counts,
         topics_entered: {
           value: @stat.topics_entered,
           req: SiteSetting.tl1_requires_topics_entered,
@@ -50,6 +52,7 @@ module DiscourseSeeTl3Progress
     def tl2_stats
       {
         tl2_met: Promotion.tl2_met?(@user),
+        penalty_counts: @pc.penalty_counts,
         days_visited: {
           value: @stat.days_visited,
           req: SiteSetting.tl2_requires_days_visited,
