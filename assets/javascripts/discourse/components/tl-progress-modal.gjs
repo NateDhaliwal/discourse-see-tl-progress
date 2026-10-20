@@ -100,11 +100,17 @@ export default class Tl3ProgressModal extends Component {
           {{else}}
             {{#if (notEq @user.trust_level @stats.trust_level)}}
               {{dIcon "check"}}
-              {{i18n "see_tl_progress.qualifies"}}
+              {{i18n
+                "see_tl_progress.qualifies"
+                trust_level=@stats.trust_level
+              }}
               {{i18n "see_tl_progress.will_be_promoted"}}
             {{else}}
               {{dIcon "check"}}
-              {{i18n "see_tl_progress.qualifies"}}
+              {{i18n
+                "see_tl_progress.qualifies"
+                trust_level=@stats.trust_level
+              }}
             {{/if}}
           {{/if}}
         {{else}}
@@ -125,7 +131,10 @@ export default class Tl3ProgressModal extends Component {
           {{else}}
             {{! User is TL3 and does not qualify }}
             {{dIcon "xmark"}}
-            {{i18n "see_tl_progress.does_not_qualify"}}
+            {{i18n
+              "see_tl_progress.does_not_qualify"
+              trust_level=@stats.trust_level
+            }}
           {{/if}}
         {{/if}}
       </p>

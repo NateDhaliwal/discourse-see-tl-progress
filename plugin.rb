@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# name: discourse-see-tl-progress
-# about: See your own progress to the different Trust Levels (TLs).
+# name: discourse-see-tl3-progress
+# about: See your own progress to TL3.
 # meta_topic_id: TODO
 # version: 0.0.1
 # authors: Nate Dhaliwal

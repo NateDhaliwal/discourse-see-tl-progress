@@ -78,7 +78,7 @@ export default class Tl3ProgressButton extends Component {
   get progressDoneText() {
     return i18n("see_tl_progress.progress_done", {
       steps_completed: this.stepsDone,
-      total_steps: Object.keys(this.stats).length - 2, // - 2 for suspended and silenced
+      total_steps: Object.keys(this.stats).length - 3, // - 3 for trust_level, suspended and silenced
       percentage_done: this.percentageDone,
     });
   }
@@ -103,8 +103,8 @@ export default class Tl3ProgressButton extends Component {
 
   get barsFilledOrEmpty() {
     let state = [];
-    // - 2 for suspended and silenced
-    for (let i = 0; i < Object.keys(this.stats).length - 2; i++) {
+    // - 3 for trust_level, suspended and silenced
+    for (let i = 0; i < Object.keys(this.stats).length - 3; i++) {
       if (i < this.stepsDone) {
         state.push(
           `background-color: ${this.session.defaultColorSchemeIsDark || this.session.darkModeAvailable ? this.siteSettings.progress_bar_color_dark : this.siteSettings.progress_bar_color_light}; width: 100%;`
@@ -285,7 +285,10 @@ export default class Tl3ProgressButton extends Component {
           style="margin-bottom: 1em;"
           @action={{this.toggleModalState}}
           @icon={{this.siteSettings.modal_button_icon}}
-          @label="see_tl_progress.modal_button_text"
+          @translatedLabel={{i18n
+            "see_tl_progress.modal_button_text"
+            trust_level=this.stats.trust_level
+          }}
         />
         {{#if this.modalShowing}}
           <DModal

@@ -103,7 +103,7 @@ module DiscourseSeeTlProgress
       {
         trust_level: 3,
         tl3_met: Promotion.tl3_met?(@user)
-      }.merge(DiscourseSeeTl3Progress::TL3Stats.new(@user).stats)
+      }.merge(DiscourseSeeTlProgress::TL3Stats.new(@user).stats)
     end
   end
 end
