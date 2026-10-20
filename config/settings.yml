@@ -1,5 +1,5 @@
-see_tl3_progress:
-  see_tl3_progress_enabled:
+see_tl_progress:
+  see_tl_progress_enabled:
     default: false
     client: true
   enable_for_trust_level_promotions:

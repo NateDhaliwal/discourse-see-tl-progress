@@ -1,4 +1,4 @@
-module DiscourseSeeTl3Progress
+module DiscourseSeeTlProgress
   class TL3Stats
     def initialize(user)
       @user = user

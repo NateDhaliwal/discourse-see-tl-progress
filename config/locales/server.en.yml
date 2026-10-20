@@ -1,6 +1,6 @@
 en:
   site_settings:
-    see_tl3_progress_enabled: "Enable this plugin"
+    see_tl_progress_enabled: "Enable this plugin"
     enable_for_trust_level_promotions: "Show progress bar when user is trying to promote to this/these Trust Levels"
     progress_bar_color_light: "Color for the progress bar for light color palettes. Must be a valid CSS color (RGB/HSL/hex/name)"
     progress_bar_background_color_light: "Background color for the progress bar for light color palettes. Must be a valid CSS color (RGB/HSL/hex/name)"

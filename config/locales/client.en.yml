@@ -3,9 +3,9 @@ en:
     admin:
       site_settings:
         categories:
-          see_tl3_progress: "See TL3 Progress"
+          see_tl_progress: "See TL3 Progress"
   js:
-    see_tl3_progress:
+    see_tl_progress:
       title: "See TL3 Progress"
       modal_button_text: "Show TL3 progress"
       modal_title_tl_1: "TL1 progress"
@@ -31,7 +31,7 @@ en:
       likes_received: "Likes Received"
       likes_received_days: "Likes Received: unique days"
       likes_received_users: "Likes Received: unique users"
-      progress_done: "%{steps_completed}/14 steps done, %{percentage_done}% complete."
+      progress_done: "%{steps_completed}/%{total_steps} steps done, %{percentage_done}% complete."
       time_period:
         one: "Based on last %{num_days} days."
         other: "Based on last %{num_days} days."

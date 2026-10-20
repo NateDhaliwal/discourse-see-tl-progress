@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { concat } from "@ember/helper";
 import { service } from "@ember/service";
 import { trustHTML } from "@ember/template";
-import { and } from "discourse/truth-helpers";
+import { and, notEq } from "discourse/truth-helpers";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
 import { doesQualify } from "../lib/calculate-stats.js";
@@ -43,7 +43,7 @@ export default class Tl3ProgressModal extends Component {
   }
 
   get timePeriodText() {
-    return i18n("see_tl3_progress.time_period", {
+    return i18n("see_tl_progress.time_period", {
       num_days: this.stats.time_period,
     });
   }
@@ -58,8 +58,8 @@ export default class Tl3ProgressModal extends Component {
         {{i18n
           (if
             this.suspended_before.data
-            "see_tl3_progress.suspended"
-            "see_tl3_progress.not_suspended"
+            "see_tl_progress.suspended"
+            "see_tl_progress.not_suspended"
           )
         }}</p>
 
@@ -71,8 +71,8 @@ export default class Tl3ProgressModal extends Component {
         {{i18n
           (if
             this.silenced_before.data
-            "see_tl3_progress.silenced"
-            "see_tl3_progress.not_silenced"
+            "see_tl_progress.silenced"
+            "see_tl_progress.not_silenced"
           )
         }}</p>
 
@@ -81,7 +81,7 @@ export default class Tl3ProgressModal extends Component {
           {{#if (shouldShow key)}}
             <ProgressBar
               @id={{key}}
-              @title={{concat "see_tl3_progress." key}}
+              @title={{concat "see_tl_progress." key}}
               @total={{stat.req}}
               @type={{if stat.max "max" "min"}}
               @value={{stat.value}}
@@ -93,21 +93,18 @@ export default class Tl3ProgressModal extends Component {
       <hr />
 
       <p class="inline-wrapper tl3-promotion-decision">
-        {{!-- <div style={{trustHTML this.doesQualifyStyle}}>
-          {{icon (if this.doesQualify "check" (if @is_locked "lock" "xmark"))}}
-        </div> --}}
         {{#if this.doesQualify}}
-          {{#if (and @is_locked (eq @locked_at_trust_level 2))}}
+          {{#if @is_locked}}
             {{dIcon "lock"}}
-            {{i18n "see_tl3_progress.locked_will_not_be_promoted"}}
+            {{i18n "see_tl_progress.locked_will_not_be_promoted"}}
           {{else}}
-            {{#if (eq @user.trust_level 2)}}
+            {{#if (notEq @user.trust_level @stats.trust_level)}}
               {{dIcon "check"}}
-              {{i18n "see_tl3_progress.qualifies"}}
-              {{i18n "see_tl3_progress.will_be_promoted"}}
+              {{i18n "see_tl_progress.qualifies"}}
+              {{i18n "see_tl_progress.will_be_promoted"}}
             {{else}}
               {{dIcon "check"}}
-              {{i18n "see_tl3_progress.qualifies"}}
+              {{i18n "see_tl_progress.qualifies"}}
             {{/if}}
           {{/if}}
         {{else}}
@@ -115,20 +112,20 @@ export default class Tl3ProgressModal extends Component {
             {{#if (and @is_locked (eq @locked_at_trust_level 3))}}
               {{! User is TL3, and is locked at TL3 }}
               {{dIcon "lock"}}
-              {{i18n "see_tl3_progress.locked_will_not_be_demoted"}}
+              {{i18n "see_tl_progress.locked_will_not_be_demoted"}}
             {{else}}
               {{#if @stats.on_grace_period}}
                 {{dIcon "check"}}
-                {{i18n "see_tl3_progress.on_grace_period"}}
+                {{i18n "see_tl_progress.on_grace_period"}}
               {{else}}
                 {{dIcon "xmark"}}
-                {{i18n "see_tl3_progress.will_be_demoted"}}
+                {{i18n "see_tl_progress.will_be_demoted"}}
               {{/if}}
             {{/if}}
           {{else}}
-            {{! User is TL2 }}
+            {{! User is TL3 and does not qualify }}
             {{dIcon "xmark"}}
-            {{i18n "see_tl3_progress.does_not_qualify"}}
+            {{i18n "see_tl_progress.does_not_qualify"}}
           {{/if}}
         {{/if}}
       </p>

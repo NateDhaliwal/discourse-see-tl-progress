@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DiscourseSeeTl3Progress
+module DiscourseSeeTlProgress
   class StatsProgress
     def initialize(user)
       @user = user
@@ -23,6 +23,7 @@ module DiscourseSeeTl3Progress
     # TL0 -> TL1
     def tl1_stats
       {
+        trust_level: 1,
         tl1_met: Promotion.tl1_met?(@user),
         penalty_counts: @pc.penalty_counts,
         topics_entered: {
@@ -51,6 +52,7 @@ module DiscourseSeeTl3Progress
     # TL1 -> TL2
     def tl2_stats
       {
+        trust_level: 2,
         tl2_met: Promotion.tl2_met?(@user),
         penalty_counts: @pc.penalty_counts,
         days_visited: {
@@ -99,6 +101,7 @@ module DiscourseSeeTl3Progress
     # TL2 -> TL3
     def tl3_stats
       {
+        trust_level: 3,
         tl3_met: Promotion.tl3_met?(@user)
       }.merge(DiscourseSeeTl3Progress::TL3Stats.new(@user).stats)
     end

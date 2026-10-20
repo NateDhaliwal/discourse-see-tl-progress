@@ -1,5 +1,6 @@
 export default function shouldShow(key) {
   return ![
+    "trust_level",
     "time_period",
     "on_grace_period",
     "num_posts_in_muted_categories",

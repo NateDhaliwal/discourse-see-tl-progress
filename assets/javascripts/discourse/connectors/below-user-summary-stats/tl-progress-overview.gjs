@@ -12,7 +12,7 @@ import DConditionalLoadingSpinner from "discourse/ui-kit/d-conditional-loading-s
 import DModal from "discourse/ui-kit/d-modal";
 import dIcon from "discourse/ui-kit/helpers/d-icon";
 import { i18n } from "discourse-i18n";
-import Tl3ProgressModal from "../../components/tl3-progress-modal.gjs";
+import Tl3ProgressModal from "../../components/tl-progress-modal.gjs";
 import {
   doesQualify,
   nextStatToGet,
@@ -76,8 +76,9 @@ export default class Tl3ProgressButton extends Component {
   }
 
   get progressDoneText() {
-    return i18n("see_tl3_progress.progress_done", {
+    return i18n("see_tl_progress.progress_done", {
       steps_completed: this.stepsDone,
+      total_steps: Object.keys(this.stats).length - 2, // - 2 for suspended and silenced
       percentage_done: this.percentageDone,
     });
   }
@@ -94,15 +95,15 @@ export default class Tl3ProgressButton extends Component {
 
   get closestStatText() {
     const closestStatObj = nextStatToGet(this.stats);
-    return i18n("see_tl3_progress.closest_stat", {
-      stat_name: i18n(`see_tl3_progress.${closestStatObj.key}`),
+    return i18n("see_tl_progress.closest_stat", {
+      stat_name: i18n(`see_tl_progress.${closestStatObj.key}`),
       stat_left_to_next: closestStatObj.left,
     });
   }
 
   get barsFilledOrEmpty() {
     let state = [];
-    // -2 for suspended and silenced
+    // - 2 for suspended and silenced
     for (let i = 0; i < Object.keys(this.stats).length - 2; i++) {
       if (i < this.stepsDone) {
         state.push(
@@ -134,11 +135,11 @@ export default class Tl3ProgressButton extends Component {
     if (!closestStatObj) {
       return "";
     }
-    return i18n("see_tl3_progress.closest_stat_to_lose", {
+    return i18n("see_tl_progress.closest_stat_to_lose", {
       stat_name: i18n(
         closestStatObj.key === "days_visited" // days_visited uses its own plugin-defined locale
-          ? "see_tl3_progress.days_visited"
-          : `see_tl3_progress.${closestStatObj.key}`
+          ? "see_tl_progress.days_visited"
+          : `see_tl_progress.${closestStatObj.key}`
       ),
       stat_left: closestStatObj.left,
     });
@@ -149,20 +150,20 @@ export default class Tl3ProgressButton extends Component {
     const num_posts = this.stats.num_posts_in_muted_categories;
 
     const topics_text = i18n(
-      `see_tl3_progress.muted_topics_count.${num_topics === 1 ? "one" : "other"}`,
+      `see_tl_progress.muted_topics_count.${num_topics === 1 ? "one" : "other"}`,
       {
         num_topics: this.stats.num_topics_in_muted_categories,
       }
     );
 
     const posts_text = i18n(
-      `see_tl3_progress.muted_posts_count.${num_posts === 1 ? "one" : "other"}`,
+      `see_tl_progress.muted_posts_count.${num_posts === 1 ? "one" : "other"}`,
       {
         num_posts: this.stats.num_posts_in_muted_categories,
       }
     );
 
-    return i18n("see_tl3_progress.has_muted_topics_posts_warning", {
+    return i18n("see_tl_progress.has_muted_topics_posts_warning", {
       muted_topics_count: topics_text,
       muted_posts_count: posts_text,
     });
@@ -171,12 +172,12 @@ export default class Tl3ProgressButton extends Component {
   get overviewHeading() {
     const tl = this.args.user.trust_level;
     if (tl === 0) {
-      return i18n("see_tl3_progress.modal_title_tl_1");
+      return i18n("see_tl_progress.modal_title_tl_1");
     } else if (tl === 1) {
-      return i18n("see_tl3_progress.modal_title_tl_2");
+      return i18n("see_tl_progress.modal_title_tl_2");
     } else {
       return i18n(
-        `see_tl3_progress.modal_title_tl_2.${this.stats.time_period === 1 ? "one" : "other"}`,
+        `see_tl_progress.modal_title_tl_2.${this.stats.time_period === 1 ? "one" : "other"}`,
         {
           num_days: this.stats.time_period,
         }
@@ -261,7 +262,7 @@ export default class Tl3ProgressButton extends Component {
           {{dIcon "triangle-exclamation"}}
           {{this.mutedTopicsAndPostsText}}
           <a href={{concat "/u/" @user.username "/preferences/tracking"}}>
-            {{i18n "see_tl3_progress.muted_categories_link_text"}}
+            {{i18n "see_tl_progress.muted_categories_link_text"}}
           </a>
         </div>
       {{/if}}
@@ -284,7 +285,7 @@ export default class Tl3ProgressButton extends Component {
           style="margin-bottom: 1em;"
           @action={{this.toggleModalState}}
           @icon={{this.siteSettings.modal_button_icon}}
-          @label="see_tl3_progress.modal_button_text"
+          @label="see_tl_progress.modal_button_text"
         />
         {{#if this.modalShowing}}
           <DModal
