@@ -35,7 +35,7 @@ see_tl_progress:
     type: string
     required: true
     client: true
-  show_verbose_tl3_progress:
+  show_verbose_tl_progress:
     default: false
     type: bool
     client: true
@@ -53,7 +53,7 @@ see_tl_progress:
     default: false
     type: bool
     client: true
-  show_warning_when_tl3_requirements_low:
+  show_warning_when_tl_requirements_low:
     default: false
     type: bool
     client: true

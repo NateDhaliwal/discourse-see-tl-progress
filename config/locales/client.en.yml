@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          see_tl_progress: "See TL3 Progress"
+          see_tl_progress: "See TL Progress"
   js:
     see_tl_progress:
       modal_button_text: "Show TL%{trust_level} progress"

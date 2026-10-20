@@ -129,7 +129,7 @@ export default class Tl3ProgressModal extends Component {
               {{/if}}
             {{/if}}
           {{else}}
-            {{! User is TL3 and does not qualify }}
+            {{! User is not TL3 and does not qualify }}
             {{dIcon "xmark"}}
             {{i18n
               "see_tl_progress.does_not_qualify"

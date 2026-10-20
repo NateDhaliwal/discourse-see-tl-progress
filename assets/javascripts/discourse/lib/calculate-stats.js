@@ -48,7 +48,11 @@ export function percentageDone(stats) {
     }
   }
 
-  return Math.round((total / 14) * 100);
+  return Math.round((total / statsBaseNum(stats)) * 100);
+}
+
+export function statsBaseNum(stats) {
+  return Object.keys(stats).length - (stats.trust_level === 3 ? 9 : 3);
 }
 
 export function doesQualify(stats) {

@@ -18,6 +18,7 @@ import {
   nextStatToGet,
   nextStatToLose,
   percentageDone,
+  statsBaseNum,
   stepsDone,
 } from "../../lib/calculate-stats.js";
 
@@ -39,7 +40,7 @@ export default class Tl3ProgressButton extends Component {
       .includes((user.trust_level + 1).toString());
 
     if (user.trust_level === 3) {
-      if (settings.show_warning_when_tl3_requirements_low) {
+      if (settings.show_warning_when_tl_requirements_low) {
         return true;
       } else {
         return false;
@@ -78,16 +79,15 @@ export default class Tl3ProgressButton extends Component {
   get progressDoneText() {
     return i18n("see_tl_progress.progress_done", {
       steps_completed: this.stepsDone,
-      total_steps: Object.keys(this.stats).length - 3, // - 3 for trust_level, suspended and silenced
+      total_steps: statsBaseNum(this.stats),
       percentage_done: this.percentageDone,
     });
   }
 
   get showClosestStat() {
     return (
-      this.siteSettings.show_verbose_tl3_progress &&
+      this.siteSettings.show_verbose_tl_progress &&
       this.siteSettings.show_next_closest_stat &&
-      this.args.user.trust_level === 2 &&
       this.stepsDone < 14 &&
       Boolean(nextStatToGet(this.stats))
     );
@@ -103,8 +103,7 @@ export default class Tl3ProgressButton extends Component {
 
   get barsFilledOrEmpty() {
     let state = [];
-    // - 3 for trust_level, suspended and silenced
-    for (let i = 0; i < Object.keys(this.stats).length - 3; i++) {
+    for (let i = 0; i < statsBaseNum(this.stats); i++) {
       if (i < this.stepsDone) {
         state.push(
           `background-color: ${this.session.defaultColorSchemeIsDark || this.session.darkModeAvailable ? this.siteSettings.progress_bar_color_dark : this.siteSettings.progress_bar_color_light}; width: 100%;`
@@ -124,7 +123,7 @@ export default class Tl3ProgressButton extends Component {
   get showAboutToLoseTl3() {
     return (
       !this.stats.on_grace_period &&
-      this.siteSettings.show_warning_when_tl3_requirements_low &&
+      this.siteSettings.show_warning_when_tl_requirements_low &&
       this.args.user.trust_level === 3 &&
       Boolean(nextStatToLose(this.stats, this.siteSettings))
     );
@@ -143,6 +142,24 @@ export default class Tl3ProgressButton extends Component {
       ),
       stat_left: closestStatObj.left,
     });
+  }
+
+  get showMutedTopicsAndPosts() {
+    if (this.stats.trust_level === 3) {
+      return !(
+        this.stats.topics_viewed?.value >= this.stats.topics_viewed?.req &&
+        this.stats.posts_read?.value >= this.stats.posts_read?.req &&
+        this.stats.topics_viewed_all_time?.value >=
+          this.stats.topics_viewed_all_time?.req &&
+        this.stats.posts_read_all_time?.value >=
+          this.stats.posts_read_all_time?.req
+      );
+    } else {
+      return !(
+        this.stats.topics_entered?.value >= this.stats.topics_entered?.req &&
+        this.stats.posts_read?.value >= this.stats.posts_read?.req
+      );
+    }
   }
 
   get mutedTopicsAndPostsText() {
@@ -255,7 +272,8 @@ export default class Tl3ProgressButton extends Component {
             (gte this.stats.num_posts_in_muted_categories 1)
           )
           (lt @user.trust_level 3)
-          (lt this.stepsDone 14)
+          (lt this.stepsDone (statsBaseNum this.stats))
+          this.showMutedTopicsAndPosts
         )
       }}
         <div>
@@ -276,7 +294,7 @@ export default class Tl3ProgressButton extends Component {
 
       {{#if
         (and
-          this.siteSettings.show_verbose_tl3_progress
+          this.siteSettings.show_verbose_tl_progress
           (or (lt @user.trust_level 3) (eq @user.trust_level 3))
         )
       }}
