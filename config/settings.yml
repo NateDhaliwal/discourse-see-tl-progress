@@ -8,7 +8,6 @@ see_tl_progress:
     choices:
       - 1
       - 2
-      - 3
     client: true
   progress_bar_color_light:
     default: "green"

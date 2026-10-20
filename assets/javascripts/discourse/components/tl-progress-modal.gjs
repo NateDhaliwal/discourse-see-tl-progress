@@ -49,13 +49,13 @@ export default class Tl3ProgressModal extends Component {
   }
 
   get modalBottomText() {
-    return this.siteSettings.see_tl_progress[
-      `modal_botton_text_tl${this.stats.trust_level}`
+    return this.siteSettings[
+      `modal_bottom_text_tl${this.stats.trust_level}`
     ] !== ""
       ? {
           show: true,
-          text: this.siteSettings.see_tl_progress[
-            `modal_botton_text_tl${this.stats.trust_level}`
+          text: this.siteSettings[
+            `modal_bottom_text_tl${this.stats.trust_level}`
           ],
         }
       : {

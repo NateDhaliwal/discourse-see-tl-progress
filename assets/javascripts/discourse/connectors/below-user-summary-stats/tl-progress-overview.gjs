@@ -194,7 +194,7 @@ export default class Tl3ProgressButton extends Component {
       return i18n("see_tl_progress.modal_title_tl_2");
     } else {
       return i18n(
-        `see_tl_progress.modal_title_tl_2.${this.stats.time_period === 1 ? "one" : "other"}`,
+        `see_tl_progress.modal_title_tl_3.${this.stats.time_period === 1 ? "one" : "other"}`,
         {
           num_days: this.stats.time_period,
         }
