@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module DiscourseSeeTlProgress
   class TL3Stats
     def initialize(user)

@@ -5,7 +5,7 @@ module DiscourseSeeTlProgress
     requires_plugin PLUGIN_NAME
     requires_login
 
-    def show 
+    def show
       raise Discourse::NotFound unless SiteSetting.show_locked_at_trust_level
       user = User.find_by_username(params[:username])
       raise Discourse::NotFound unless user

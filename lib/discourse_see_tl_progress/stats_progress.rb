@@ -9,14 +9,14 @@ module DiscourseSeeTlProgress
     end
 
     def stats
-      if @user.trust_level + 1 == 1 then
-        return tl1_stats()
-      elsif @user.trust_level + 1 == 2 then
-        return tl2_stats()
-      elsif @user.trust_level + 1 == 3 then
-        return tl3_stats()
+      if @user.trust_level + 1 == 1
+        tl1_stats()
+      elsif @user.trust_level + 1 == 2
+        tl2_stats()
+      elsif @user.trust_level + 1 == 3
+        tl3_stats()
       else
-        return {}
+        {}
       end
     end
 
@@ -94,16 +94,15 @@ module DiscourseSeeTlProgress
           value: @stat.calc_topic_reply_count!,
           req: SiteSetting.tl2_requires_topic_reply_count,
           max: false,
-        }
+        },
       }
     end
 
     # TL2 -> TL3
     def tl3_stats
-      {
-        trust_level: 3,
-        tl3_met: Promotion.tl3_met?(@user)
-      }.merge(DiscourseSeeTlProgress::TL3Stats.new(@user).stats)
+      { trust_level: 3, tl3_met: Promotion.tl3_met?(@user) }.merge(
+        DiscourseSeeTlProgress::TL3Stats.new(@user).stats,
+      )
     end
   end
 end

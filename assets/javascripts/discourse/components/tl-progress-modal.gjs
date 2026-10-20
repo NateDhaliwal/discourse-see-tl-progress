@@ -48,6 +48,22 @@ export default class Tl3ProgressModal extends Component {
     });
   }
 
+  get modalBottomText() {
+    return this.siteSettings.see_tl_progress[
+      `modal_botton_text_tl${this.stats.trust_level}`
+    ] !== ""
+      ? {
+          show: true,
+          text: this.siteSettings.see_tl_progress[
+            `modal_botton_text_tl${this.stats.trust_level}`
+          ],
+        }
+      : {
+          show: false,
+          text: "",
+        };
+  }
+
   <template>
     {{#if @stats}}
       <p class="inline-wrapper">
@@ -140,9 +156,9 @@ export default class Tl3ProgressModal extends Component {
       </p>
     {{/if}}
 
-    {{#if this.siteSettings.modal_bottom_text}}
+    {{#if this.modalBottomText.show}}
       <hr />
-      <p>{{trustHTML this.siteSettings.modal_bottom_text}}</p>
+      <p>{{trustHTML this.modalBottomText.text}}</p>
     {{/if}}
   </template>
 }

@@ -43,7 +43,19 @@ see_tl_progress:
     default: false
     type: bool
     client: true
-  modal_bottom_text:
+  modal_bottom_text_tl1:
+    default: ""
+    type: string
+    textarea: true
+    required: false
+    client: true
+  modal_bottom_text_tl2:
+    default: ""
+    type: string
+    textarea: true
+    required: false
+    client: true
+  modal_bottom_text_tl3:
     default: ""
     type: string
     textarea: true
